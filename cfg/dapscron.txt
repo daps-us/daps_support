@@ -15,7 +15,7 @@
 # v v v v v
 # * * * * * /home/daps/daps_support/bin/dapsscript.sh myscript.sh >> /home/daps/daps_support/logs/myscript.cron.log 2>&1
 #
-# fetch access logs the website
+# fetch access logs from the website
 0 3 1 * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.old.logs.sh >> /home/daps/daps_support/logs/daps.fetch.old.logs.cron.log 2>&1
 5 3 * * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.logs.sh     >> /home/daps/daps_support/logs/daps.fetch.logs.cron.log     2>&1
 10 3 * * *  /home/daps/daps_support/bin/dapsscript.sh daps.fetch.site.sh     >> /home/daps/daps_support/logs/daps.fetch.site.cron.log     2>&1

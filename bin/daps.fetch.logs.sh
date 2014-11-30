@@ -34,14 +34,14 @@ sslfile="daps.us-ssl_log-${month}-${year}.gz"
 echo "sslfile=$sslfile"
 
 # fetch non-ssl file
-scp daps@daps.us:/home/daps/logs/$nonsslfile /home/daps/daps_support/websitebackups/logs
+scp daps.us:/home/daps/logs/$nonsslfile /home/daps/daps_support/websitebackups/logs
 if [ $? -ne 0 ];then
     echo "ERROR fetching $nonsslfile from website"
     exit 1
 fi
 
 # fetch ssl file
-scp daps@daps.us:/home/daps/logs/$sslfile /home/daps/daps_support/websitebackups/logs
+scp daps.us:/home/daps/logs/$sslfile /home/daps/daps_support/websitebackups/logs
 if [ $? -ne 0 ];then
     echo "ERROR fetching $sslfile from website"
     exit 1

@@ -1,4 +1,3 @@
 daps_support
 ============
-
-support folder for daps scripts
+This folder represents the scripts I use to manage the daps website.
