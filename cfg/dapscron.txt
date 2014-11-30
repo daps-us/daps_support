@@ -1,0 +1,24 @@
+# Use this file to replace the actual cron table.
+# Any changes to cron should be made to this file.  
+# The contents of this file should then replace any existing cron table
+# entries.
+#
+# NOTE: to remove the previous cron use: crontab -r
+# To load this file as the new cron use: crontab dapscron.txt
+#
+# Example
+# +----------- minute        0-59
+# | +--------- hour          0-23
+# | | +------- day of month  1-31
+# | | | +----- month         1-12
+# | | | | +--- day of week   0-6 where 0 is Sun
+# v v v v v
+# * * * * * /home/daps/daps_support/bin/dapsscript.sh myscript.sh >> /home/daps/daps_support/logs/myscript.cron.log 2>&1
+#
+# fetch access logs the website
+0 3 1 * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.old.logs.sh >> /home/daps/daps_support/logs/daps.fetch.old.logs.cron.log 2>&1
+5 3 * * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.logs.sh     >> /home/daps/daps_support/logs/daps.fetch.logs.cron.log     2>&1
+10 3 * * *  /home/daps/daps_support/bin/dapsscript.sh daps.fetch.site.sh     >> /home/daps/daps_support/logs/daps.fetch.site.cron.log     2>&1
+#
+# remove old logs
+55 23 * * * /home/daps/daps_support/bin/dapsscript.sh remove.old.logs.sh     >> /home/daps/daps_support/logs/remove.old.logs.cron.log     2>&1
