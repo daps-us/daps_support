@@ -10,7 +10,7 @@ if [[ $rc -eq 0 ]];then
 else
    echo "DAPS ERROR Drupal cron failed. rc=$rc"
 fi
-/home/daps/drush -u 1 -r /home/daps/public_html civicrm-api job.execute auth=0 -y
+/home/daps/bin/drush -u 1 -r /home/daps/public_html civicrm-api job.execute auth=0 -y
 rc=$?
 if [[ $rc -eq 0 ]];then
    echo "DAPS INFO Civicrm cron successful. rc=$rc"
