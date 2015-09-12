@@ -13,12 +13,11 @@
 # | | | +----- month         1-12
 # | | | | +--- day of week   0-6 where 0 is Sun
 # v v v v v
-# * * * * * /home/daps/daps_support/bin/dapsscript.sh myscript.sh >> /home/daps/daps_support/logs/myscript.cron.log 2>&1
+# * * * * * /home/daps/daps_support/bin/dapsscript.sh myscript.sh >> /home/daps/daps_support/logs/myscript.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
 #
-# fetch access logs from the website
-0 3 1 * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.old.logs.sh >> /home/daps/daps_support/logs/daps.fetch.old.logs.cron.log 2>&1
-5 3 * * *   /home/daps/daps_support/bin/dapsscript.sh daps.fetch.logs.sh     >> /home/daps/daps_support/logs/daps.fetch.logs.cron.log     2>&1
-10 3 * * *  /home/daps/daps_support/bin/dapsscript.sh daps.fetch.site.sh     >> /home/daps/daps_support/logs/daps.fetch.site.cron.log     2>&1
-#
-# remove old logs
-55 23 * * * /home/daps/daps_support/bin/dapsscript.sh remove.old.logs.sh     >> /home/daps/daps_support/logs/remove.old.logs.cron.log     2>&1
+# run drush cron functions at the bottom of every hour
+30 * * * * /home/daps/daps_support/bin/dapsscript.sh dapscron.sh >> /home/daps/daps_support/logs/dapscron.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
+# run nightly backups at midnight pacific (2 AM Dallas time)
+0 0 * * * /home/daps/daps_support/bin/dapsscript.sh site-backup.sh >> /home/daps/daps_support/logs/site-backup.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
+# remove old logs 
+5 * * * * /home/daps/daps_support/bin/dapsscript.sh remove.old.logs.sh >> /home/daps/daps_support/logs/remove.old.logs.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1

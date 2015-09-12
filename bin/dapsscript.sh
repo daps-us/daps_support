@@ -41,6 +41,12 @@ logdir="/home/daps/daps_support/logs"
 script="/home/daps/daps_support/bin/dapsscript.sh"
 logname="$logdir/dapsscript.log"
 
+# set initial timestamp
+timestamp=`date +"%Y%m%d%H%M%S"`
+if [[ $? -ne 0 ]];then
+   quit error "ERROR determining timestamp."
+fi
+
 # set the name of the script
 scriptname=`basename $0`
 if [[ -z $scriptname ]];then
@@ -58,10 +64,12 @@ script=/home/daps/daps_support/bin/$1
 # this causes the first command line argument to be removed from the list of arguments
 shift
 
-logname="$logdir/`basename $script .sh`.log"
+logname="$logdir/`basename $script .sh`.$timestamp.log"
 if [[ $? -ne 0 ]];then
    quit error "ERROR determining logname in."
 fi
+
+# this line makes sure the log file is created, and empty
 >$logname
 if [[ $? -ne 0 ]];then
    quit error "ERROR creating $logname."
