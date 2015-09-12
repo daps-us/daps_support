@@ -21,6 +21,13 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 #
+echo "Removing site-backup logs older than 90 days"
+find . -type f -name "site-backup.*.log" -mtime +90 -ls -exec rm -f {} \;
+if [[ $? -ne 0 ]];then
+    echo "DAPS ERROR removing /home/daps/daps_support/logs/site-backup.*.log"
+    exit 1
+fi
+#
 echo "Removing site-backup cron logs older than 30 days"
 find . -type f -name "site-backup.*.cron.log" -mtime +30 -ls -exec rm -f {} \;
 if [[ $? -ne 0 ]];then

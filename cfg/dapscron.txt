@@ -21,3 +21,5 @@
 0 0 * * * /home/daps/daps_support/bin/dapsscript.sh site-backup.sh >> /home/daps/daps_support/logs/site-backup.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
 # remove old logs 
 5 * * * * /home/daps/daps_support/bin/dapsscript.sh remove.old.logs.sh >> /home/daps/daps_support/logs/remove.old.logs.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
+# remove backups at 5 AM pacific (7 AM Dallas time)
+0 5 * * * /home/daps/daps_support/bin/dapsscript.sh remove.old.backups.sh >> /home/daps/daps_support/logs/remove.old.backups.`date +"\%Y\%m\%d\%H\%M\%S"`.cron.log 2>&1
