@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # this script will be used to restore a site that.
 
 echo $0 started at `date`
