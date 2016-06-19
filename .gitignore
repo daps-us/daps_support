@@ -1,5 +1,7 @@
 # Ignore configuration files that may contain sensitive information.
 sites/*/*settings*.php
+cfg/site.cfg
+cfg/sitesettings/*
 
 # Ignore paths that contain generated content.
 files/
@@ -38,3 +40,4 @@ xmlrpc.php
 # Ignore everything in the daps_support backups directories
 /websitebackups
 */*~
+/backups

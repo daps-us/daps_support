@@ -2,7 +2,7 @@
 # script name: site-backup.sh
 # the purpose of this script is to back up the site
 
-export PATH=/home/daps/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin:/home/daps/bin
+export PATH=/home/daps/daps_support/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin:/home/daps/bin
 
 scriptname=`basename $0`
 if [[ -z $scriptname ]]; then
@@ -13,7 +13,8 @@ fi
 echo "$scriptname started at `date`"
 
 # source the site specific pieces
-. ~/cfg/site.cfg
+echo "INFO Sourcing environment variables at `date`"
+. ~/daps_support/cfg/site.cfg
 
 if [[ -z ${DOCROOT} ]]; then
     echo "ERROR DOCROOT not defined in $scriptname"
@@ -67,6 +68,7 @@ fi
 
 timestamp=`date +"%Y%m%d%H%M%S"`
 BKUPDIR=${BKUPROOT}/${timestamp}/daps
+echo "INFO Backup directory set to $BACKUPDIR at `date`"
 
 if [[ -e ${BKUPDIR} ]]; then
     rm -rf ${BKUPDIR}
@@ -83,11 +85,13 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # take the site offline
+echo "INFO taking the site offline at `date`"
 drush vset maintenance_mode 1 --root=${DOCROOT} -d
 if [[ $? -ne 0 ]]; then
     echo "ERROR taking site offline"
     exit 1
 fi
+echo "INFO clearing caches at `date`"
 drush cache-clear all --root=${DOCROOT} -d
 if [[ $? -ne 0 ]]; then
     echo "ERROR clearing cache"
@@ -95,6 +99,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # tar up the site
+echo "INFO saving off a copy of the ${DOCROOT} at `date`"
 tar -C ${DOCROOT} -cf ${BKUPDIR}/site.tar .
 if [[ $? -ne 0 ]]; then
    echo "ERROR Unable to back up contents of ${DOCROOT}"
@@ -102,12 +107,14 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # dump the drupal database
+echo "INFO taking database dump of ${DRNAME} at `date`"
 mysqldump --result-file ${BKUPDIR}/drupal.sql --no-autocommit --single-transaction --opt -Q --host=${DRHOST} --user=${DRUSER} --password=${DRPASS} ${DRNAME}
 if [[ $? -ne 0 ]]; then
    echo "ERROR Unable to backup drupal database"
    exit 1
 fi
 # dump the civicrm database
+echo "INFO taking database dump of ${CVNAME} at `date`"
 mysqldump --result-file ${BKUPDIR}/civicrm.sql --no-autocommit --single-transaction --opt -Q --host=${CVHOST} --user=${CVUSER} --password=${CVPASS} ${CVNAME}
 if [[ $? -ne 0 ]]; then
    echo "ERROR Unable to backup civicrm database"
@@ -115,6 +122,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # take the site online
+echo "INFO brining the site online at `date` at `date`"
 drush vset maintenance_mode 0 --root=${DOCROOT} -d
 if [[ $? -ne 0 ]]; then
     echo "ERROR taking site online"
@@ -122,6 +130,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # zip up the three files
+echo "INFO creating backup file of site at `date`"
 tar --create --directory=${BKUPROOT}/${timestamp} --file=${BKUPROOT}/${timestamp}/daps.tar.gz --gzip daps
 if [[ $? -ne 0 ]]; then
    echo "ERROR Unable to backup daps site"
@@ -129,6 +138,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # remove temporary directory
+echo "INFO removing temporary backup directory ${BKUPDIR} at `date`"
 rm -rf ${BKUPDIR}
 if [[ $? -ne 0 ]]; then
    echo "ERROR Unable to remove temporary backup directory"
