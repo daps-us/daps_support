@@ -1,18 +1,12 @@
 #!/bin/bash
 # this script will be used to restore a site that.
 
-<<<<<<< HEAD
-echo $0 started at `date`
-
-# source the site specific settings
-=======
 # source the site specific settings
 echo $0 started at $(date)
 
 # source the site specific settings
 echo 'INFO: Fetching configuration information...'
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
-. ../cfg/site.cfg
+. ~/daps_support/cfg/site.cfg
 if [[ $? -ne 0 ]];then
     echo "ERROR attempting to fetch site settings."
     exit 1
@@ -98,22 +92,16 @@ if [[ -z $1 ]];then
 else
     SRCDIR=$1
 fi
-SRC=${BKUPROOT}/${SRCDIR}/daps.tar.gz
-<<<<<<< HEAD
-=======
+SRC=${BKUPROOT}/${SRCDIR}
 echo "INFO: Restoring source file ${SRC}..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 
 if [[ ! -f ${SRC} ]];then
     echo "ERROR locating source file ${SRC}"
     exit 1
 fi
 
-TGTDIR=/tmp/tempsite
-<<<<<<< HEAD
-=======
+TGTDIR=/home/daps/tmp/tempsite
 echo "INFO: Unpacking to temporary target ${TGTDIR}..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 # first test, if the directory exists, remove it
 if [[ -e ${TGTDIR} ]];then
     # the temp workspace is in use
@@ -175,10 +163,7 @@ fi
 # now let us snag the things we want from the old site, if they exist
 
 SETTINGSDIR=${DOCROOT}/sites/default
-<<<<<<< HEAD
-=======
 echo "INFO: Backing up ${SETTINGSDIR}..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 if [[ ! -e ${SETTINGSDIR} ]]; then
     echo "WARN did not find ${SETTINGSDIR}"
 fi
@@ -223,10 +208,7 @@ else
 fi
 
 # change ownership of all files on default directory (or you won't be able to remove it)
-<<<<<<< HEAD
-=======
 echo "INFO: Removing ${DOCROOT}..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 sudo chown -R daps:daps ${DOCROOT}
 if [[ $? -ne 0 ]]
 then
@@ -250,10 +232,7 @@ if [[ -d ${DOCROOT} ]];then
 fi
 
 # drop the old databases
-<<<<<<< HEAD
-=======
 echo "INFO: Removing databases..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 mysqladmin -u${DRUSER} -p${DRPASS} -f drop ${DRNAME}
 if [[ $? -ne 0 ]]; then
     echo "ERROR removing old drupal database."
@@ -267,10 +246,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # start adding things back
-<<<<<<< HEAD
-=======
 echo "INFO: Restoring databases..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 mysqladmin -u${DRUSER} -p${DRPASS} create ${DRNAME}
 if [[ $? -ne 0 ]]; then
     echo "ERROR creating new drupal database."
@@ -289,16 +265,19 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
+mysql -u${DRUSER} -p${DRPASS} ${DRNAME} < ${HOME}/daps_support/bin/clear_drupal_caches.sql
+if [[ $? -ne 0 ]]; then
+    echo "ERROR clearing caches of drupal database."
+    exit 1
+fi
+
 mysql -u${CVUSER} -p${CVPASS} ${CVNAME} < ${TGTDIR}/daps/civicrm.sql
 if [[ $? -ne 0 ]]; then
     echo "ERROR loading new civicrm database."
     exit 1
 fi
 
-<<<<<<< HEAD
-=======
 echo "INFO: Restoring ${DOCROOT}..."
->>>>>>> 5562e24ef05ae4817b434a4a215310dfe9c64489
 mkdir -p ${DOCROOT}
 if [[ $? -ne 0 ]]; then
     echo "ERROR creating new ${DOCROOT}"
@@ -387,6 +366,12 @@ if [[ -f ${TGTDIR}/local/civicrm.settings.php ]];then
     fi
 fi
 
+# copy in the htaccess file for the test site
+if [[ -f ${HOME}/daps_support/cfg/htaccess.test ]]
+then
+	cp ${HOME}/daps_support/cfg/htaccess.test ${DOCROOT}/.htaccess
+fi
+
 # reset permissions on default directory
 chmod 0555 ${DOCROOT}/sites/default
 if [[ $? -ne 0 ]];then
@@ -394,10 +379,27 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 
-if [[ -d /tmp/tempsite ]];then
-    rm -rf /tmp/tempsite
+sudo chcon -R -t httpd_sys_content_t /home/daps/public_html
+if [[ $? -ne 0 ]];then
+    echo "ERROR unable to reset http context on ${DOCROOT}"
+    exit 1
+fi
+sudo semanage fcontext -a -t httpd_sys_rw_content_t /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+if [[ $? -ne 0 ]];then
+    echo "ERROR unable to set http rw context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+    exit 1
+fi
+sudo restorecon -v /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+if [[ $? -ne 0 ]];then
+    echo "ERROR unable to restore context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+    exit 1
+fi
+
+
+if [[ -d ${TGTDIR} ]];then
+    rm -rf ${TGTDIR}
     if [[ $? -ne 0 ]];then
-        echo "ERROR removing /tmp/tempsite"
+        echo "ERROR removing ${TGTDIR}"
         exit 1
     fi
 fi
