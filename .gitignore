@@ -37,10 +37,11 @@ xmlrpc.php
 /scripts
 /themes
 
-# Ignore everything in the daps_support backups directories
+# Ignore some things in the daps_support directories
 /websitebackups
 */*~
 /backups
+/bin/drush
 
 # Ignore the temporary directory
 /tmp
