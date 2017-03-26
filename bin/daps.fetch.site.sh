@@ -18,7 +18,7 @@ echo "timestamp=$timestamp"
 
 # fetch site directory
 echo "INFO fetching backup $timestamp from website"
-scp -r daps.us:/home/daps/daps_support/backups/$timestamp* /home/daps/daps_support/websitebackups/site
+scp -r daps.us:/home/daps/daps_support/backups/$timestamp*/*.tar.gz /home/daps/daps_support/websitebackups/site
 if [ $? -ne 0 ];then
     echo "ERROR fetching $timestamp from website"
     exit 1
