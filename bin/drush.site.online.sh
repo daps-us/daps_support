@@ -4,7 +4,7 @@
 echo $0 started at $(date)
 
 # source the site specific settings
-. ../cfg/site.cfg
+. /home/daps/daps_support/cfg/site.cfg
 if [[ $? -ne 0 ]];then
     echo "ERROR attempting to fetch site settings."
     exit 1
