@@ -38,4 +38,6 @@ xmlrpc.php
 /themes
 
 # Ignore everything in the daps_support backups directories
+/websitebackups
+*/*~
 /backups

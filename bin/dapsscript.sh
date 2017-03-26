@@ -2,7 +2,7 @@
 # this script is used to run other scripts.  It sets the enviornment to be
 # drush friendly and writes output to a log named the same as th script.
 #
-export PATH=/home/daps/daps_support/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin:/home/daps/bin
+export PATH=/home/daps/daps_support/bin:$PATH
 
 function line {
    local timestamp=`date +"%Y%m%d%H%M%S"`
@@ -51,6 +51,11 @@ fi
 scriptname=`basename $0`
 if [[ -z $scriptname ]];then
    quit error "ERROR determining script name."
+fi
+
+cd /home/daps/daps_support/bin
+if [[ $? -ne 0 ]];then
+    quit error "ERROR changing directories to /home/daps/daps_support/bin"
 fi
 
 if [[ $# -eq 0 ]];then

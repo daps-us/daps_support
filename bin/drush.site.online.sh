@@ -1,7 +1,7 @@
 #!/bin/bash
 # this script will be used to restore a site that.
 
-echo $0 started at `date`
+echo $0 started at $(date)
 
 # source the site specific settings
 . ../cfg/site.cfg
@@ -32,5 +32,5 @@ then
    echo "ERROR taking site out of maintenance mode"
    exit 1
 fi
-echo $0 finished at `date`
+echo $0 finished at $(date)
 exit 0
