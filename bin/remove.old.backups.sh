@@ -7,8 +7,8 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 #
-echo "Removing backups older than 90 days"
-find . -depth -mtime +90 -type d -ls -exec rm -rf {} \;
+echo "Removing backups older than 30 days"
+find . -depth -mtime +30 -type d -ls -exec rm -rf {} \;
 if [[ $? -ne 0 ]];then
     echo "DAPS ERROR removing /home/daps/daps_support/backups"
     exit 1
