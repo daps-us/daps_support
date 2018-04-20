@@ -70,7 +70,7 @@ fi
 
 timestamp=`date +"%Y%m%d%H%M%S"`
 BKUPDIR=${BKUPROOT}/${timestamp}/daps
-echo "INFO Backup directory set to $BACKUPDIR at `date`"
+echo "INFO Backup directory set to $BKUPDIR at `date`"
 
 if [[ -e ${BKUPDIR} ]]; then
     rm -rf ${BKUPDIR}
