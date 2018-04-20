@@ -1,7 +1,9 @@
 #!/bin/sh
 # script name: site-backup.sh
 # the purpose of this script is to back up the site
-
+if [[ -f /opt/php56/bin/php ]]; then
+    export DRUSH_PHP=/opt/php56/bin/php
+fi
 export PATH=/home/daps/daps_support/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin:/home/daps/bin
 
 scriptname=`basename $0`
