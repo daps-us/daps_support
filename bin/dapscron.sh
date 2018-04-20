@@ -1,6 +1,8 @@
 #!/bin/bash
 # This script is used to automate the drupal and civicrm tasks 
-
+if [[ -f /opt/php56/bin/php ]]; then
+   export DRUSH_PHP=/opt/php56/bin/php
+fi
 export PATH=/home/daps/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
 echo $0 started at `date`
 /home/daps/bin/drush -u 1 -r /home/daps/public_html cron
