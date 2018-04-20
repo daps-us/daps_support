@@ -2,6 +2,9 @@
 # this script is used to run other scripts.  It sets the enviornment to be
 # drush friendly and writes output to a log named the same as th script.
 #
+if [[ -f /opt/php56/bin/php ]]; then
+   export DRUSH_PHP=/opt/php56/bin/php
+fi
 export PATH=/home/daps/daps_support/bin:$PATH
 
 function line {
