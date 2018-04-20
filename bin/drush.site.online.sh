@@ -1,6 +1,8 @@
 #!/bin/bash
 # this script will be used to restore a site that.
-
+if [[ -f /opt/php/php56/bin/php ]]; then
+    export DRUSH_PHP=/opt/php56/bin/php
+fi
 echo $0 started at $(date)
 
 # source the site specific settings
