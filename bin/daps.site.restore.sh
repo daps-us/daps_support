@@ -175,7 +175,7 @@ if [[ ! -e ${SETTINGSDIR}/settings.php ]]; then
         cp ${HOME}/daps_support/cfg/settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
-           echo "ERROR unable to copy ${HOME}/daps_support/cfg//settings.php to ${TGTDIR}/local"
+           echo "ERROR unable to copy ${HOME}/daps_support/cfg/settings.php to ${TGTDIR}/local"
            exit 1
        fi
     fi
@@ -195,7 +195,7 @@ if [[ ! -e ${SETTINGSDIR}/civicrm.settings.php ]]; then
         cp ${HOME}/daps_support/cfg/civicrm.settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
-           echo "ERROR unable to copy ${HOME}/daps_support/cfg//settings.php to ${TGTDIR}/local"
+           echo "ERROR unable to copy ${HOME}/daps_support/cfg/settings.php to ${TGTDIR}/local"
            exit 1
        fi
     fi
