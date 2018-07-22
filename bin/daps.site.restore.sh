@@ -169,9 +169,10 @@ if [[ ! -e ${SETTINGSDIR} ]]; then
 fi
 
 if [[ ! -e ${SETTINGSDIR}/settings.php ]]; then
-    echo "WARN did not find ${SETTINGSDIR}/settings.php. Using defaults..."
+    echo "WARN did not find ${SETTINGSDIR}/settings.php..."
     if [[ -f ${HOME}/daps_support/cfg/settings.php ]]
     then
+        echo "Using default settings.php..."
         cp ${HOME}/daps_support/cfg/settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
@@ -192,6 +193,7 @@ if [[ ! -e ${SETTINGSDIR}/civicrm.settings.php ]]; then
     echo "WARN did not find ${SETTINGSDIR}/civicrm.settings.php"
     if [[ -f ${HOME}/daps_support/cfg/civicrm.settings.php ]]
     then
+        echo "Using default civicrm.settings.php..."
         cp ${HOME}/daps_support/cfg/civicrm.settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
