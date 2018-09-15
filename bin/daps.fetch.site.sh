@@ -26,6 +26,18 @@ if [[ ! -d ${RESTOREDIR} ]];then
    echo 'ERROR ${RESTOREDIR} is not a directory'
    exit 1
 fi
+if [[ ! -e ${RESTOREDIR}/site ]];then
+   mkdir -p ${RESTOREDIR}/site;rc=$?
+   if [[ $rc -ne 0 ]];then
+      echo "ERROR creating ${RESTOREDIR}/site. RC=$rc"
+      exit $rc
+   fi
+fi
+if [[ ! -d ${RESTOREDIR}/site ]];then
+   # why is it not a directory?
+   echo "ERROR ${RESTOREDIR}/site is not a directory. Please remove it."
+   exit 1
+fi
 
 # figure out what the timestamp will look like
 if [[ -z $1 ]]; then
