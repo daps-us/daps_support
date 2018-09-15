@@ -18,6 +18,10 @@ if [[ -z ${BKUPROOT} ]];then
    echo 'ERROR BKUPROOT is not defined.'
    exit 1
 fi
+if [[ ! -d ${BKUPROOT} ]];then
+   echo 'ERROR ${BKUPROOT} is not a directory'
+   exit 1
+fi
 
 # figure out what the timestamp will look like
 if [[ -z $1 ]]; then
