@@ -70,13 +70,13 @@ if [[ -z ${SITEGROUP} ]]; then
     exit 1
 fi
 
-if [[ -e ${BKUPROOT} ]]; then
-    if [[ ! -d ${BKUPROOT} ]];then
-        echo "ERROR ${BKUPROOT} is not a directory."
+if [[ -e ${RESTOREDIR} ]]; then
+    if [[ ! -d ${RESTOREDIR} ]];then
+        echo "ERROR ${RESTOREDIR} is not a directory."
         exit 1
     fi
 else
-    echo "ERROR finding ${BKUPROOT}"
+    echo "ERROR finding ${RESTOREDIR}"
     exit 1
 fi
 
@@ -84,15 +84,15 @@ fi
 # first, check for one on the command line
 if [[ -z $1 ]];then
     # nothing on the command line
-    SRCDIR=`ls -tr ${BKUPROOT} | tail -1`
+    SRCDIR=`ls -tr ${RESTOREDIR} | tail -1`
     if [[ $? -ne 0 ]];then
-        echo "ERROR getting current source directory from ${BKUPROOT}"
+        echo "ERROR getting current source directory from ${RESTOREDIR}"
         exit 1
     fi
 else
     SRCDIR=$1
 fi
-SRC=${BKUPROOT}/${SRCDIR}
+SRC=${RESTOREDIR}/${SRCDIR}
 echo "INFO: Restoring source file ${SRC}..."
 
 if [[ ! -f ${SRC} ]];then
