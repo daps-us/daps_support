@@ -18,8 +18,12 @@ if [[ -z ${BKUPROOT} ]];then
    echo 'ERROR BKUPROOT is not defined.'
    exit 1
 fi
-if [[ ! -d ${BKUPROOT} ]];then
-   echo 'ERROR ${BKUPROOT} is not a directory'
+if [[ -z ${RESTOREDIR} ]];then
+   echo 'ERROR RESTOREDIR is not defined.'
+   exit 1
+fi
+if [[ ! -d ${RESTOREDIR} ]];then
+   echo 'ERROR ${RESTOREDIR} is not a directory'
    exit 1
 fi
 
@@ -37,7 +41,7 @@ echo "timestamp=$timestamp"
 
 # fetch site directory
 echo "INFO fetching backup $timestamp from website"
-scp -r daps.us:${BKUPROOT}/$timestamp*/*.tar.gz ${BKUPROOT}/site
+scp -r daps.us:${BKUPROOT}/$timestamp*/*.tar.gz ${RESTOREDIR}/site
 if [ $? -ne 0 ];then
     echo "ERROR fetching $timestamp from website"
     exit 1
