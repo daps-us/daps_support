@@ -22,20 +22,15 @@ if [[ -z ${RESTOREDIR} ]];then
    echo 'ERROR RESTOREDIR is not defined.'
    exit 1
 fi
-if [[ ! -d ${RESTOREDIR} ]];then
-   echo 'ERROR ${RESTOREDIR} is not a directory'
-   exit 1
-fi
-if [[ ! -e ${RESTOREDIR}/site ]];then
-   mkdir -p ${RESTOREDIR}/site;rc=$?
+if [[ ! -e ${RESTOREDIR} ]];then
+   mkdir -p ${RESTOREDIR};rc=$?
    if [[ $rc -ne 0 ]];then
-      echo "ERROR creating ${RESTOREDIR}/site. RC=$rc"
+      echo "ERROR creating ${RESTOREDIR}. RC=$rc"
       exit $rc
    fi
 fi
-if [[ ! -d ${RESTOREDIR}/site ]];then
-   # why is it not a directory?
-   echo "ERROR ${RESTOREDIR}/site is not a directory. Please remove it."
+if [[ ! -d ${RESTOREDIR} ]];then
+   echo 'ERROR ${RESTOREDIR} is not a directory'
    exit 1
 fi
 
@@ -53,7 +48,7 @@ echo "timestamp=$timestamp"
 
 # fetch site directory
 echo "INFO fetching backup $timestamp from website"
-scp -r daps.us:${BKUPROOT}/$timestamp*/*.tar.gz ${RESTOREDIR}/site/
+scp -r daps.us:${BKUPROOT}/$timestamp*/*.tar.gz ${RESTOREDIR}
 if [ $? -ne 0 ];then
     echo "ERROR fetching $timestamp from website"
     exit 1
