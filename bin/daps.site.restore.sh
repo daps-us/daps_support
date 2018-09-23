@@ -381,21 +381,21 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 
-sudo chcon -R -t httpd_sys_content_t /home/daps/public_html
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to reset http context on ${DOCROOT}"
-    exit 1
-fi
-sudo semanage fcontext -a -t httpd_sys_rw_content_t /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to set http rw context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
-    exit 1
-fi
-sudo restorecon -v /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to restore context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
-    exit 1
-fi
+#sudo chcon -R -t httpd_sys_content_t /home/daps/public_html
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to reset http context on ${DOCROOT}"
+#    exit 1
+#fi
+#sudo semanage fcontext -a -t httpd_sys_rw_content_t /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to set http rw context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+#    exit 1
+#fi
+#sudo restorecon -v /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to restore context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+#    exit 1
+#fi
 
 
 if [[ -d ${TGTDIR} ]];then
