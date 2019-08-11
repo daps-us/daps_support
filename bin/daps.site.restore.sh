@@ -3,6 +3,7 @@
 
 # source the site specific settings
 echo $0 started at $(date)
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 
 # source the site specific settings
 echo 'INFO: Fetching configuration information...'
@@ -84,7 +85,7 @@ fi
 # first, check for one on the command line
 if [[ -z $1 ]];then
     # nothing on the command line
-    SRCDIR=`ls -tr ${BKUPROOT} | tail -1`
+    SRCDIR=$(ls -tr ${BKUPROOT} | tail -1)
     if [[ $? -ne 0 ]];then
         echo "ERROR getting current source directory from ${BKUPROOT}"
         exit 1

@@ -1,6 +1,9 @@
 #!/bin/sh -x
 # this script will be used to restore a site that.
 
+export DRUSH_PHP=/opt/cpanel/ea-php56/root/usr/bin/php
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
+
 DOCROOT=/var/www
 SITENAME=html
 

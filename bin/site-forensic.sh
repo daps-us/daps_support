@@ -2,9 +2,11 @@
 # script name: backup-site.sh
 # the purpose of this script is to back up the site
 
+export DRUSH_PHP=/opt/cpanel/ea-php56/root/usr/bin/php
 export PATH=/bin:/usr/bin:/home/daps/bin
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 
-echo "site-backup.sh started at `date`"
+echo "site-backup.sh started at $(date)"
 
 DOCROOT=/home/daps/public_html
 BKUPROOT=/home/daps/drush-backups/manual
@@ -95,5 +97,5 @@ if [[ $? -ne 0 ]]; then
    exit 1
 fi
 
-echo "site-backup.sh stopped at `date`"
+echo "site-backup.sh stopped at $(date)"
 exit 0

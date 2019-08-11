@@ -5,10 +5,11 @@
 # is on the pacific timezone. Do not run before 2 AM central time.
 # Just to be safe, run at 3 AM central time
 
-echo $0 started at `date`
+echo $0 started at $(date)
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 
 # figure out what month this is
-thismonth=`date +"%b"`
+thismonth=$(date +"%b")
 if [ $? -ne 0 ];then
     echo "ERROR determining this month in $0"
     exit 1
@@ -16,7 +17,7 @@ fi
 echo "thismonth=$thismonth"
 
 # figure out what this year is
-year=`date +"%Y"`
+year=$(date +"%Y")
 if [ $? -ne 0 ];then
     echo "ERROR determining this year in $0"
     exit 1
@@ -95,5 +96,5 @@ if [ $? -ne 0 ];then
 fi
 
 # quit and report
-echo $0 finished at `date`
+echo $0 finished at $(date)
 exit 0

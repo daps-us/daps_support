@@ -1,5 +1,6 @@
 #!/bin/sh
 # simple script to create databases
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 if [[ -z ${DRUSER} ]]; then
     echo "ERROR locating DRUSER"
     exit 1

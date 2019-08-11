@@ -1,6 +1,6 @@
 #!/bin/bash
 # this script will run every day
-echo $0 started at `date`
+echo $0 started at $(date)
 cd /home/daps/daps_support/logs
 if [[ $? -ne 0 ]];then
     echo "DAPS ERROR accessing /home/daps/daps_support/logs"
@@ -46,5 +46,5 @@ if [[ $? -ne 0 ]];then
     echo "DAPS ERROR removing /home/daps/daps_support/logs/remove.old.logs.*.cron.log"
     exit 1
 fi
-echo $0 finished at `date`
+echo $0 finished at $(date)
 exit 0

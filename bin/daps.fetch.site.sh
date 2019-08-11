@@ -3,10 +3,11 @@
 # this machine is in the central timezone, the daps server
 # is on the pacific timezone. Do not run before 2 AM central time.
 # Just to be safe, run at 3 AM central time
-echo $0 started at `date`
+echo $0 started at $(date)
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 # figure out what the timestamp will look like
 if [[ -z $1 ]]; then
-   timestamp=`date +"%Y%m%d"`
+   timestamp=$(date +"%Y%m%d")
    if [[ $? -ne 0 ]];then
       echo "ERROR determining timestamp in $0"
       exit 1
@@ -23,6 +24,6 @@ if [ $? -ne 0 ];then
     echo "ERROR fetching $timestamp from website"
     exit 1
 fi
-echo $0 finished at `date`
+echo $0 finished at $(date)
 # quit and report
 exit 0

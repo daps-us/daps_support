@@ -1,6 +1,8 @@
 #!/bin/bash
 # this script will be used to restore a site that.
 
+export DRUSH_PHP=/opt/cpanel/ea-php56/root/usr/bin/php
+export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 echo $0 started at $(date)
 
 # source the site specific settings

@@ -2,10 +2,11 @@
 # this script is used to run other scripts.  It sets the enviornment to be
 # drush friendly and writes output to a log named the same as th script.
 #
+export DRUSH_PHP=/opt/cpanel/ea-php56/root/usr/bin/php
 export PATH=/home/daps/daps_support/bin:$PATH
 
 function line {
-   local timestamp=`date +"%Y%m%d%H%M%S"`
+   local timestamp=$(date +"%Y%m%d%H%M%S")
    echo $scriptname $timestamp $*
 }
 
@@ -42,13 +43,13 @@ script="/home/daps/daps_support/bin/dapsscript.sh"
 logname="$logdir/dapsscript.log"
 
 # set initial timestamp
-timestamp=`date +"%Y%m%d%H%M%S"`
+timestamp=$(date +"%Y%m%d%H%M%S")
 if [[ $? -ne 0 ]];then
    quit error "ERROR determining timestamp."
 fi
 
 # set the name of the script
-scriptname=`basename $0`
+scriptname=$(basename $0)
 if [[ -z $scriptname ]];then
    quit error "ERROR determining script name."
 fi
@@ -69,7 +70,7 @@ script=/home/daps/daps_support/bin/$1
 # this causes the first command line argument to be removed from the list of arguments
 shift
 
-logname="$logdir/`basename $script .sh`.$timestamp.log"
+logname="$logdir/$(basename $script .sh).$timestamp.log"
 if [[ $? -ne 0 ]];then
    quit error "ERROR determining logname in."
 fi
