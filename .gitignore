@@ -39,6 +39,7 @@ xmlrpc.php
 
 # Ignore some things in the daps_support directories
 /websitebackups
+/logs
 */*~
 /backups
 /bin/drush

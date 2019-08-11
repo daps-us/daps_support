@@ -5,6 +5,36 @@
 # Just to be safe, run at 3 AM central time
 echo $0 started at $(date)
 export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
+
+# source the site specific settings
+echo 'INFO: Fetching configuration information...'
+. ~/daps_support/cfg/site.cfg
+if [[ $? -ne 0 ]];then
+   echo 'ERROR attempting to fetch site settings.'
+   exit 1
+fi
+
+#sanity checks
+if [[ -z ${BKUPROOT} ]];then
+   echo 'ERROR BKUPROOT is not defined.'
+   exit 1
+fi
+if [[ -z ${RESTOREDIR} ]];then
+   echo 'ERROR RESTOREDIR is not defined.'
+   exit 1
+fi
+if [[ ! -e ${RESTOREDIR} ]];then
+   mkdir -p ${RESTOREDIR};rc=$?
+   if [[ $rc -ne 0 ]];then
+      echo "ERROR creating ${RESTOREDIR}. RC=$rc"
+      exit $rc
+   fi
+fi
+if [[ ! -d ${RESTOREDIR} ]];then
+   echo 'ERROR ${RESTOREDIR} is not a directory'
+   exit 1
+fi
+
 # figure out what the timestamp will look like
 if [[ -z $1 ]]; then
    timestamp=$(date +"%Y%m%d")
@@ -19,7 +49,7 @@ echo "timestamp=$timestamp"
 
 # fetch site directory
 echo "INFO fetching backup $timestamp from website"
-scp -r daps.us:/home/daps/daps_support/backups/$timestamp*/*.tar.gz /home/daps/daps_support/websitebackups/site
+scp -r daps.us:${BKUPROOT}/$timestamp*/*.tar.gz ${RESTOREDIR}
 if [ $? -ne 0 ];then
     echo "ERROR fetching $timestamp from website"
     exit 1

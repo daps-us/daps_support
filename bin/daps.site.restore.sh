@@ -71,6 +71,11 @@ if [[ -z ${SITEGROUP} ]]; then
     exit 1
 fi
 
+if [[ -z ${BKUPROOT} ]]; then
+    echo "ERROR locating BKUPROOT"
+    exit 1
+fi
+
 if [[ -e ${BKUPROOT} ]]; then
     if [[ ! -d ${BKUPROOT} ]];then
         echo "ERROR ${BKUPROOT} is not a directory."
@@ -81,11 +86,21 @@ else
     exit 1
 fi
 
+if [[ -e ${RESTOREDIR} ]]; then
+    if [[ ! -d ${RESTOREDIR} ]];then
+        echo "ERROR ${RESTOREDIR} is not a directory."
+        exit 1
+    fi
+else
+    echo "ERROR finding ${RESTOREDIR}"
+    exit 1
+fi
+
 # now that we have the backup directory, let us find the version to deploy
 # first, check for one on the command line
 if [[ -z $1 ]];then
     # nothing on the command line
-    SRCDIR=$(ls -tr ${BKUPROOT} | tail -1)
+    SRCDIR=$(ls -trd ${BKUPROOT}/[0-9]* | tail -1)
     if [[ $? -ne 0 ]];then
         echo "ERROR getting current source directory from ${BKUPROOT}"
         exit 1
@@ -93,7 +108,7 @@ if [[ -z $1 ]];then
 else
     SRCDIR=$1
 fi
-SRC=${BKUPROOT}/${SRCDIR}
+SRC=${SRCDIR}/daps.tar.gz
 echo "INFO: Restoring source file ${SRC}..."
 
 if [[ ! -f ${SRC} ]];then
@@ -170,13 +185,14 @@ if [[ ! -e ${SETTINGSDIR} ]]; then
 fi
 
 if [[ ! -e ${SETTINGSDIR}/settings.php ]]; then
-    echo "WARN did not find ${SETTINGSDIR}/settings.php. Using defaults..."
+    echo "WARN did not find ${SETTINGSDIR}/settings.php"
     if [[ -f ${HOME}/daps_support/cfg/settings.php ]]
     then
+        echo "INFO Using default settings.php..."
         cp ${HOME}/daps_support/cfg/settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
-           echo "ERROR unable to copy ${HOME}/daps_support/cfg//settings.php to ${TGTDIR}/local"
+           echo "ERROR unable to copy ${HOME}/daps_support/cfg/settings.php to ${TGTDIR}/local"
            exit 1
        fi
     fi
@@ -193,10 +209,11 @@ if [[ ! -e ${SETTINGSDIR}/civicrm.settings.php ]]; then
     echo "WARN did not find ${SETTINGSDIR}/civicrm.settings.php"
     if [[ -f ${HOME}/daps_support/cfg/civicrm.settings.php ]]
     then
+        echo "INFO Using default civicrm.settings.php..."
         cp ${HOME}/daps_support/cfg/civicrm.settings.php ${TGTDIR}/local
         if [[ $? -ne 0 ]]
         then
-           echo "ERROR unable to copy ${HOME}/daps_support/cfg//settings.php to ${TGTDIR}/local"
+           echo "ERROR unable to copy ${HOME}/daps_support/cfg/settings.php to ${TGTDIR}/local"
            exit 1
        fi
     fi
@@ -380,21 +397,21 @@ if [[ $? -ne 0 ]];then
     exit 1
 fi
 
-sudo chcon -R -t httpd_sys_content_t /home/daps/public_html
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to reset http context on ${DOCROOT}"
-    exit 1
-fi
-sudo semanage fcontext -a -t httpd_sys_rw_content_t /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to set http rw context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
-    exit 1
-fi
-sudo restorecon -v /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
-if [[ $? -ne 0 ]];then
-    echo "ERROR unable to restore context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
-    exit 1
-fi
+#sudo chcon -R -t httpd_sys_content_t /home/daps/public_html
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to reset http context on ${DOCROOT}"
+#    exit 1
+#fi
+#sudo semanage fcontext -a -t httpd_sys_rw_content_t /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to set http rw context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+#    exit 1
+#fi
+#sudo restorecon -v /home/daps/public_html/sites/default/files/civicrm/templates_c/en_US
+#if [[ $? -ne 0 ]];then
+#    echo "ERROR unable to restore context on ${DOCROOT}/sites/default/files/civicrm/templates_c/en_US"
+#    exit 1
+#fi
 
 
 if [[ -d ${TGTDIR} ]];then

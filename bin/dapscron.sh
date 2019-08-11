@@ -1,6 +1,9 @@
 #!/bin/bash
 # This script is used to automate the drupal and civicrm tasks 
 export DRUSH_PHP=/opt/cpanel/ea-php56/root/usr/bin/php
+if [[ -f /opt/php56/bin/php ]]; then
+   export DRUSH_PHP=/opt/php56/bin/php
+fi
 export PATH=/home/daps/bin:/usr/local/jdk/bin:/home/daps/perl5/bin:/usr/kerberos/bin:/usr/lib/courier-imap/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
 export PATH=/opt/cpanel/ea-php56/root/usr/bin:$PATH
 echo $0 started at $(date)
