@@ -38,9 +38,27 @@ then
 	exit 1
 fi
 
+echo "======================================================="
+echo "Before Delete...."
+echo "-------------------------------------------------------"
+echo "SHOW DATABASES;" | sudo mysql
+echo "-------------------------------------------------------"
+echo "SHOW GRANTS FOR '${DRUSER}'@'${DRHOST}';" | sudo mysql
+echo "-------------------------------------------------------"
+echo "SHOW GRANTS FOR '${CVUSER}'@'${CVHOST}';" | sudo mysql
+echo "======================================================="
+echo "Delete...."
+echo "-------------------------------------------------------"
 echo "DROP DATABASE IF EXISTS ${DRNAME};" | sudo mysql
 echo "DROP DATABASE IF EXISTS ${CVNAME};" | sudo mysql
 echo "DROP USER IF EXISTS '${DRUSER}'@'${DRHOST}';" | sudo mysql
 echo "DROP USER IF EXISTS '${CVUSER}'@'${CVHOST}';" | sudo mysql
-
+echo "======================================================="
+echo "After Delete...."
+echo "-------------------------------------------------------"
+echo "SHOW DATABASES;" | sudo mysql
+echo "-------------------------------------------------------"
+echo "SHOW GRANTS FOR '${DRUSER}'@'${DRHOST}';" | sudo mysql
+echo "-------------------------------------------------------"
+echo "SHOW GRANTS FOR '${CVUSER}'@'${CVHOST}';" | sudo mysql
 exit 0
