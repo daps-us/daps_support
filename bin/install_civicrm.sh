@@ -67,7 +67,7 @@ function create_dir {
 }
 
 function install_bower {
-    sudo /snap/bin/snap install bower --classic;rc=$?
+    sudo /usr/bin/snap install bower --classic;rc=$?
     if [[ $rc -ne 0 ]]
     then
         echo "ERROR installing bower"
