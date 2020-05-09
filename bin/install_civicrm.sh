@@ -66,15 +66,7 @@ function create_dir {
     return
 }
 
-function install_bower {
-    sudo /usr/bin/snap install bower --classic;rc=$?
-    if [[ $rc -ne 0 ]]
-    then
-        echo "ERROR installing bower"
-        exit 1
-    fi
-    return
-}
+source ${HOME}/init/web_site.cfg
 
 iam=$(whoami)
 echo running $(basename $0) as ${iam}...
@@ -85,15 +77,9 @@ then
     echo "ERROR getting to ${HOME}"
     exit $rc
 fi
-
-create_dir ${HOME}/init
-create_dir /opt/www/html
-
 echo PWD="$PWD"
-export PATH=$PATH:/snap/bin
 
-echo "Installing bower..."
-install_bower
+create_dir /opt/www/html
 
 echo "Installing Composer..."
 install_composer
@@ -107,7 +93,7 @@ then
 fi
 
 echo "Setting GitHubToken..."
-composer config -g github-oauth.github.com ${GitHubToken};rc=$?
+composer config -g github-oauth.github.com ${GITHUBTOKEN};rc=$?
 if [[ $rc -ne 0 ]]
 then
     echo "ERROR setting GitHubToken"
