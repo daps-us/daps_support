@@ -38,7 +38,7 @@ function wget_resource {
         -H "Authorization: token ${GITHUBTOKEN}" \
         -H 'Accept: application/vnd.github.v4.raw' \
         -O ${HOME}/init/${target} \
-        -L https://api.github.com/repos/daps-us/${source}
+        -L https://api.github.com/repos/${source}
     rc=$?
     if [[ ${rc} -ne 0 ]]; then
         echo "ERROR fetching ${source}"
