@@ -46,3 +46,4 @@ xmlrpc.php
 
 # Ignore the temporary directory
 /tmp
+.vscode/settings.json
