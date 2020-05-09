@@ -66,8 +66,10 @@ if [[ ! -d ${HOME}/init ]]; then
     exit 1
 fi
 
-# downloade site configuration
-wget_resource web_site.cfg  ${SITE_CONFIG_URL} $(whoami) $(whoami) "0600"
+# downloade site configuration only if it does not exist
+if [[ ! -f ${HOME}/init/web_site.cfg ]]; then
+    wget_resource web_site.cfg  ${SITE_CONFIG_URL} $(whoami) $(whoami) "0600"
+fi
 
 # source site configuration
 OLD_HOME=${HOME} # envvars unsets HOME so we need to put it back
