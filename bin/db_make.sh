@@ -2,7 +2,7 @@
 
 
 # source the config values
-. ${HOME}/init/site.cfg
+source ${HOME}/init/web_site.cfg
 
 if [[ -z $DRNAME ]]
 then
@@ -69,7 +69,7 @@ echo "CREATE USER IF NOT EXISTS '${DRUSER}'@'${DRHOST}' IDENTIFIED BY '${DRPASS}
 echo "CREATE USER IF NOT EXISTS '${CVUSER}'@'${CVHOST}' IDENTIFIED BY '${CVPASS}';" | sudo mysql
 echo "GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, TRIGGER ON \`${CVNAME}\`.* TO '${CVUSER}'@'${CVHOST}';" | sudo mysql 
 echo "GRANT SUPER ON *.* TO '${CVUSER}'@'${CVHOST}';" | sudo mysql
-echo "GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON \`${DRNAME}\`.* TO '${DRUSER}'@'${DRHOST}';" | sudo mysql
+echo "GRANT ALL PRIVILEGES ON \`${DRNAME}\`.* TO '${DRUSER}'@'${DRHOST}';" | sudo mysql
 echo "GRANT SELECT ON \`${CVNAME}\`.* TO '${DRNAME}'@'${CVHOST}';" | sudo mysql
 echo "FLUSH PRIVILEGES;" | sudo mysql
 echo "==============================================================="
