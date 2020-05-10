@@ -97,10 +97,10 @@ if [[ ${rc} -ne 0 ]]; then
 fi
 
 # download file system create script
-wget_resource fs_make.sh https://raw.githubusercontent.com/daps-us/daps_support/master/bin/fs_make.sh ${SITEOWNER} ${SITEGROUP} "0755"
+wget_resource fs_make.sh daps-us/daps_support/contents/bin/fs_make.sh ${SITEOWNER} ${SITEGROUP} "0755"
 
 # download database create script
-wget_resource db_make.sh https://raw.githubusercontent.com/daps-us/daps_support/master/bin/db_make.sh ${SITEOWNER} ${SITEGROUP} "0755"
+wget_resource db_make.sh daps-us/daps_support/contents/bin/db_make.sh ${SITEOWNER} ${SITEGROUP} "0755"
 
 # download apache configuration files
 wget_resource apache2.conf ${APACHE_URL} root root "0644"
@@ -118,5 +118,5 @@ wget_resource dapscert.pem ${PEM_URL} root root "0644"
 wget_resource dapscert.key ${KEY_URL} root ssl-cert "0640"
 
 # download the civi install script
-wget_resource install_civicrm.sh https://raw.githubusercontent.com/daps-us/daps_support/master/bin/install_civicrm.sh ${SITEOWNER} ${APACHE_RUN_GROUP} "0755"
+wget_resource install_civicrm.sh daps-us/daps_support/contents/bin/install_civicrm.sh ${SITEOWNER} ${APACHE_RUN_GROUP} "0755"
 #
